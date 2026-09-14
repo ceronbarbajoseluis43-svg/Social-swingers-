@@ -1,11 +1,16 @@
-<div align="center">
+# Swingers FB — Firebase Edition
 
-<img width="1200" height="475" alt="GHBanner" src="https://github.com/user-attachments/assets/0aa67016-6eaf-458a-adb2-6e31a0763ed6" />
+Versión ampliada de la aplicación Android con:
 
-  <h1>Built with AI Studio</h2>
+- Registro e inicio de sesión con Firebase Authentication (correo/contraseña).
+- Perfiles reales almacenados en Cloud Firestore.
+- Foto de perfil subida a Firebase Storage.
+- Descubrimiento de perfiles registrados.
+- Chat privado en tiempo real con Cloud Firestore.
+- Persistencia local Room para el contenido existente.
+- Control 18+ y modo discreto.
 
-  <p>The fastest path from prompt to production with Gemini.</p>
+## Antes de compilar
+Lee `FIREBASE_SETUP.md`. Debes crear tu proyecto Firebase y colocar el archivo real `app/google-services.json`.
 
-  <a href="https://aistudio.google.com/apps">Start building</a>
-
-</div>
+El proyecto usa `applicationId = com.aistudio.swingersfb.kx7a9`, por lo que la app Android de Firebase debe registrarse con ese package name.
