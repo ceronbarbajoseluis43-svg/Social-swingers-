@@ -1,4 +1,4 @@
-# Swingers FB — Firebase Edition
+# Social Swingers — Firebase Edition
 
 Versión ampliada de la aplicación Android con:
 

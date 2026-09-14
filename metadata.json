@@ -1,0 +1,6 @@
+{
+  "name": "Social Swingers",
+  "description": "Red social para la comunidad swinger y adultos con muro de publicaciones, historias, eventos VIP, grupos y chat privado.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
