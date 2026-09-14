@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Social Swingers</string>
+    <string name="login_title">Iniciar Sesión</string>
+    <string name="register_title">Registrarse</string>
+    <string name="email_hint">Correo Electrónico</string>
+    <string name="password_hint">Contraseña</string>
+    <string name="display_name_hint">Nombre de Usuario</string>
+    <string name="sign_in">Iniciar Sesión</string>
+    <string name="sign_up">Registrarse</string>
+    <string name="forgot_password">¿Olvidó su contraseña?</string>
+    <string name="profiles_title">Explorar Perfiles</string>
+    <string name="chat_title">Mensajes</string>
+    <string name="my_profile_title">Mi Perfil</string>
+    <string name="logout">Cerrar Sesión</string>
+    <string name="loading">Cargando...</string>
+    <string name="error">Error</string>
+    <string name="retry">Reintentar</string>
+</resources>
