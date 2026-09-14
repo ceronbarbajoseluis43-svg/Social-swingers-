@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1012546057307",
+    "project_id": "swingersfb",
+    "storage_bucket": "swingersfb.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012546057307:android:d6daa6b15a1390ac17bb7e",
+        "android_client_info": {
+          "package_name": "com.aistudio.swingersfb.kx7a9"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012546057307-0gdjqputqeitnt1emqut6sts7mddhd0h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBo0i_tmZEub7iI3vS6YYpdkVoJhBYhC3U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012546057307-0gdjqputqeitnt1emqut6sts7mddhd0h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
