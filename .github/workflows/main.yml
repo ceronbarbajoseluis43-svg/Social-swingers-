@@ -1,8 +1,14 @@
-      - name: Conceder permisos de ejecución a gradlew
-        run: chmod +x ./gradlew
-        working-directory: ./app
+      - name: Buscar y dar permisos a gradlew
+        run: |
+          GRADLEW_PATH=$(find . -name "gradlew" -print -quit)
+          if [ -z "$GRADLEW_PATH" ]; then
+            echo "Error: No se encontro el archivo gradlew en ningun lado."
+            exit 1
+          fi
+          chmod +x "$GRADLEW_PATH"
+          echo "GRADLEW_DIR=$(dirname "$GRADLEW_PATH")" >> $GITHUB_ENV
 
-      - name: Compilador APK de lanzamiento (Versión)
+      - name: Compilar APK de lanzamiento
         run: ./gradlew assembleRelease --stacktrace
-        working-directory: ./app
+        working-directory: ${{ env.GRADLEW_DIR }}
         
