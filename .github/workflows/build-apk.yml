@@ -3,9 +3,7 @@ name: APK para crear usuarios de redes sociales
 on:
   push:
     branches: [ "main", "master" ]
-  pull_request:
-    branches: [ "main", "master" ]
-  workflow_dispatch: # Permite ejecutar el trabajo manualmente desde la pestaña Actions
+  workflow_dispatch:
 
 jobs:
   build:
@@ -13,33 +11,29 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # 1. Set up job & Descargar proyecto
       - name: Descargar proyecto
         uses: actions/checkout@v4
 
-      # 2. Configurar Java 17
       - name: Configurar Java 17
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-          cache: 'gradle'
 
-      # 3. Configurar el SDK de Android (Corrección del error de licencias/sdkmanager)
-      - name: Configurar el SDK de Android
-        uses: android-actions/setup-android@v4
+      # Se utiliza la acción oficial de Gradle que descarga el SDK automáticamente sin romperse
+      - name: Configurar Gradle y SDK de Android
+        uses: gradle/actions/setup-gradle@v4
 
-      # 4. Dar permisos de ejecución al Gradle Wrapper
       - name: Conceder permisos de ejecución a gradlew
         run: chmod +x ./gradlew
+        working-directory: ./app
 
-      # 5. Construir la aplicación (Generar APK)
-      - name: Construir APK de depuración (Debug)
-        run: ./gradlew assembleDebug
+      - name: Compilar APK de lanzamiento (Release)
+        run: ./gradlew assembleRelease --stacktrace
+        working-directory: ./app
 
-      # 6. Guardar el archivo generado como artefacto en GitHub
-      - name: Subir APK generado
+      - name: Guardar APK como artefacto
         uses: actions/upload-artifact@v4
         with:
-          name: app-debug-apk
-          path: app/build/outputs/apk/debug/app-debug.apk
+          name: Social-Swingers-APK
+          path: "app/build/outputs/apk/release/*.apk"
