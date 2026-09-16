@@ -5,14 +5,13 @@ on:
   push:
     branches:
       - main
-      - principal
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar código
+      - name: Descargar proyecto
         uses: actions/checkout@v4
 
       - name: Configurar Java 17
@@ -21,21 +20,24 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Configurar Gradle
-        uses: gradle/actions/setup-gradle@v4
+      - name: Configurar el SDK de Android
+        uses: android-actions/setup-android@v3
 
-      - name: Instalar herramientas Android y licencias
+      - name: Instalar SDK Android
         run: |
-          yes | sdkmanager --licenses || true
-          sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
 
-      - name: Compilar con Gradle global
-        run: gradle assembleRelease --stacktrace
+      - name: Conceder permisos de ejecución a gradlew
+        run: chmod +x ./gradlew
+        working-directory: App
 
-      - name: Guardar APK como artefacto
+      - name: Compilar APK
+        run: ./gradlew assembleRelease --stacktrace
+        working-directory: App
+
+      - name: Guardar APK
         uses: actions/upload-artifact@v4
         with:
           name: Social-Swingers-APK
-          path: |
-            **/build/outputs/apk/release/*.apk
-
+          path: "**/build/outputs/apk/release/*.apk"
+          
