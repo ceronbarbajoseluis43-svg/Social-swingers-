@@ -1,13 +1,13 @@
-name: Build Social Swingers APK
+name: APK para crear usuarios de redes sociales
 
 on:
   workflow_dispatch:
   push:
     branches:
-      - main
+      - principal
 
 jobs:
-  build:
+  construir:
     runs-on: ubuntu-latest
 
     steps:
@@ -15,7 +15,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Configurar Java 17
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'temurin'
           java-version: '17'
@@ -25,21 +25,17 @@ jobs:
 
       - name: Instalar SDK Android
         run: |
-          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0"
+          ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager "platform-tools" "platforms;android-30" "build-tools;30.0.3"
 
-      - name: Dar permisos a Gradlew
+      - name: Dar permisos a Gradle
         run: chmod +x ./gradlew
 
-      - name: Compilar APK
+      - name: Compilador APK
         run: ./gradlew assembleRelease --stacktrace
 
       - name: Guardar APK
         uses: actions/upload-artifact@v4
         with:
           name: Social-Swingers-APK
-          path: "**/build/outputs/apk/release/*.apk"
-
-
-
-
-
+          path: '**/build/outputs/apk/release/*.apk'
+          
