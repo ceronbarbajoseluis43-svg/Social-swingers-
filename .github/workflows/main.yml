@@ -5,3 +5,4 @@
       - name: Compilador APK de lanzamiento (Versión)
         run: ./gradlew assembleRelease --stacktrace
         working-directory: ./app
+        
