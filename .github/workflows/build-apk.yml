@@ -19,9 +19,9 @@ jobs:
       uses: actions/checkout@v4
 
     # Forzar una versión estable de Java requerida para compilar Android
-    - name: Configurar Java
-      uses: actions/setup-java@v4
-      with:
+    - - name: Setup Android SDK
+  uses: android-actions/setup-android@v3
+  with:
         distribution: 'zulu'
         java-version: '17'
 
