@@ -1,39 +1,46 @@
-name: APK para crear usuarios de redes sociales
+name: Build Android APK
 
 on:
   push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
+    branches:
+      - main  # Cambia esto por tu rama si usas 'master' u otra
 
 jobs:
   build:
-    name: construir
     runs-on: ubuntu-latest
 
     steps:
-      - name: Descargar proyecto
+      # 1. Descargar el código del repositorio
+      - name: Checkout project
         uses: actions/checkout@v4
 
-      - name: Configurar Java 17
+      # 2. Configurar la versión correcta de Java (JDK 17 es la recomendada para proyectos modernos)
+      - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
-          java-version: '17'
           distribution: 'temurin'
+          java-version: '17'
 
-      # Se utiliza la acción oficial de Gradle que descarga el SDK automáticamente sin romperse
-      - name: Configurar Gradle y SDK de Android
-        uses: gradle/actions/setup-gradle@v4
+      # 3. Configurar el SDK de Android de forma limpia y moderna
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Conceder permisos de ejecución a gradlew
+      # 4. PASO CLAVE: Aceptar automáticamente todas las licencias del SDK para que no falle
+      - name: Accept Android SDK Licenses
+        run: |
+          yes | sdkmanager --licenses || true
+
+      # 5. Dar permisos de ejecución al script compilador de Gradle
+      - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
-        working-directory: ./app
 
-      - name: Compilar APK de lanzamiento (Release)
-        run: ./gradlew assembleRelease --stacktrace
-        working-directory: ./app
+      # 6. Compilar la aplicación en limpio para generar el archivo APK
+      - name: Build Debug APK
+        run: ./gradlew assembleDebug
 
-      - name: Guardar APK como artefacto
+      # 7. Guardar el archivo APK resultante en los artefactos de GitHub para poder descargarlo
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: Social-Swingers-APK
-          path: "app/build/outputs/apk/release/*.apk"
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
