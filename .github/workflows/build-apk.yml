@@ -1,33 +1,39 @@
-name: Build Social Swingers APK
+name: Build Android APK
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+    branches:
+      - main
+  workflow_dispatch: # Te permite ejecutarlo manualmente desde la pestaña Actions
 
 jobs:
   build:
     runs-on: ubuntu-latest
 
-    # Definimos la variable de entorno a nivel de entorno o de job para Node
-    env:
-      ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: 'true'
-
     steps:
-    - name: Checkout del código
-      uses: actions/checkout@v4
+      - name: Checkout del código
+        uses: actions/checkout@v4
 
-    # Forzar una versión estable de Java requerida para compilar Android
-    - - name: Setup Android SDK
-uses: android-actions/setup-android@v4
-  with:
-        distribution: 'zulu'
-        java-version: '17'
+      - name: Configurar Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu' # Puedes cambiarlo por 'temurin' si lo prefieres
+          java-version: '17'
 
-    # Usar la versión recomendada y actualizada para configurar el SDK
-    - name: Configurar Android SDK
-      uses: android-actions/setup-android@v3
-      with:
-        api-level: 34          # Cambia al nivel de API que requiera tu app
-        build-tools: 34.0.0    # Cambia a la versión de herramientas que uses
+      - name: Configurar Android SDK
+        uses: android-actions/setup-android@v4
+        with:
+          # Al usar la v4, ya no buscará el paquete antiguo 'tools'
+          cmdline-tools-version: 'latest' 
+
+      - name: Dar permisos de ejecución a Gradle
+        run: chmod +x ./gradlew
+
+      - name: Compilar APK de producción
+        run: ./gradlew assembleRelease
+
+      - name: Guardar el archivo APK generado
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: app/build/outputs/apk/release/*.apk
