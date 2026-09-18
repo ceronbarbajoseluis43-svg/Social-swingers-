@@ -29,14 +29,16 @@ jobs:
       # 4. Dar permisos de ejecución al script compilador de Gradle
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
+        working-directory: ./app
 
       # 5. Compilar la aplicación
       - name: Build Debug APK
         run: ./gradlew assembleDebug
+        working-directory: ./app
 
       # 6. Guardar el archivo APK resultante
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
-          path: app/build/outputs/apk/debug/*.apk
+          path: app/app/build/outputs/apk/debug/*.apk
