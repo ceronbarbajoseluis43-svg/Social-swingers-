@@ -3,7 +3,7 @@ name: Build Android APK
 on:
   push:
     branches:
-      - main  # Cambia esto por tu rama si usas 'master' u otra
+      - main
 
 jobs:
   build:
@@ -14,31 +14,27 @@ jobs:
       - name: Checkout project
         uses: actions/checkout@v4
 
-      # 2. Configurar la versión correcta de Java (JDK 17 es la recomendada para proyectos modernos)
+      # 2. Configurar la versión correcta de Java
       - name: Set up JDK 17
         uses: actions/setup-java@v4
         with:
           distribution: 'temurin'
           java-version: '17'
 
-      # 3. Configurar el SDK de Android de forma limpia y moderna
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      # 4. PASO CLAVE: Aceptar automáticamente todas las licencias del SDK para que no falle
+      # 3. CORRECCIÓN: Aceptar licencias usando el SDK manager preinstalado en la máquina virtual
       - name: Accept Android SDK Licenses
         run: |
-          yes | sdkmanager --licenses || true
+          yes | ${ANDROID_HOME}/cmdline-tools/latest/bin/sdkmanager --licenses || true
 
-      # 5. Dar permisos de ejecución al script compilador de Gradle
+      # 4. Dar permisos de ejecución al script compilador de Gradle
       - name: Grant execute permission for gradlew
         run: chmod +x ./gradlew
 
-      # 6. Compilar la aplicación en limpio para generar el archivo APK
+      # 5. Compilar la aplicación
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
-      # 7. Guardar el archivo APK resultante en los artefactos de GitHub para poder descargarlo
+      # 6. Guardar el archivo APK resultante
       - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
